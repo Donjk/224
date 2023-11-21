@@ -12,43 +12,35 @@
 	<style type="text/css">
 
 /*인트로 비디오*/
+		
 		.full{
-			position: relative; width: 100%; height: 100%; margin: auto;
+			position: relative; width: 100%; height: 100%; margin: auto; 
+			overflow: hidden;
 		}
 		#introVideo {
-			width: auto; height: 100%;
+			width: 100%; background-color: rgb(255,255,255);
 		}
 
 		#videoContainer {
-			width: 1366px; height: 1024px;
-			top: 0; left: 0;
-			overflow: hidden;
+			top: 0;
+			z-index: -99;
+			width: 1366px; height: 884px; padding-top: 140px;
+			overflow: hidden; background-color: rgb(255,255,255);
 		}
 
 
-/*처음 큰로고*/
-		#biglogo{
-			position: fixed; top: 0; left: 0;
+
+		#intro_1{
+			position: fixed; top: -40px; 
 			background-image: url("./img/logo.svg");
-			background-color: none;
 			background-size: calc(100% - 80px);
 			background-position: center;
 			background-repeat: no-repeat;
-			background-attachment: fixed;
+			background-color: transparent;
 		}
 
 
 /*이미지 슬라이드*/
-		#intro_1{
-			background-image: url("./img/logo_Grey.svg");
-			background-color: none;
-			background-size: calc(100% - 80px);
-			background-position: center;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			background-color: white;
-		}
-
 		#main_Demo{position: relative; overflow: hidden;}
 		#bgSlide{
 			position: absolute; 
@@ -63,7 +55,7 @@
 		}
 		.presetIMG{
 			width: 1366px; height: 1024px;
-			background-size: 100%; background-position: center;
+			background-size: cover; background-position: center;
 		}
 
 		@keyframes slideright {
@@ -87,31 +79,27 @@
 		}
 
 
-		#header {
-			width: 800px;
-			padding: 180px 283px 0px 283px; 
-			position:fixed; top: 0;
-		/*	background: rgba(255, 255, 255, 0.6);*/
-			}
-
 		.libraryName{margin-top: 20px}
+
 
 	</style>
 </head>
 <body>
+	<div id="fadePage" class="fadeFromWhite"></div>
+
 	<div id="header" style="z-index: 20;">
-		<img src="./img/logo.svg" class="headLogo">
+		<img id="headLogo" style="width: 333.9px;">
 		<h2 id="nav">Demo service</h2>
 	</div>
 
 	<div id="intro" class="main">
+		<div id="intro_1" class="wrapper"></div>
 		<div id="videoContainer">
-			<video id="introVideo" autoplay muted>
-				  <source src="././img/movie.mp4" type="video/mp4">
+			<video id="introVideo" source src="././img/movie.mp4" type="video/mp4" 
+			loop autoplay muted>
 			</video>
 		</div>
-		<div id="biglogo" class="full"></div>
-		<div id="intro_1" class="wrapper">
+		<div id="intro_2" class="wrapper">
 			<h3 style="padding-top: 125px;">
 				IMChair 시리즈는 인공지능에 기반해 당신에게 의자를 추천합니다.<br>
 				당신이 업로드한 이미지를 분석하고, 그것에 꼭 맞는 의자를 제안합니다.<br>
@@ -133,12 +121,12 @@
 			<div class="setBottom">
 			
 				<h3 class="white">
-					IMChair 데모 서비스에서는 인류사에 의미있는 명화와 사진을 포함한 <br>
-					이미지가 준비되어 있습니다.<br>
-					이미지 프리셋 중 마음에 드는 이미지를 골라, IMChair가 분석한 이미지의 <br>
-					결과와 의자를 확인해 보세요.
+					IMChair 데모 서비스에서는 예술작품과 사진을 포함한 이미지가 <br>
+					준비되어 있습니다.<br>
+					이미지 프리셋 중 마음에 드는 이미지를 골라, IMChair가 분석한 <br>
+					이미지의 결과와 의자를 확인해 보세요.
 				</h3>
-				<button id="DemoBtn" onclick="location.href='./demo.html'" style="background: white; color: black;">
+				<button id="DemoBtn" onclick="movePage('./demo.html');" style="background: white; color: black;">
 					데모 서비스 더 살펴보기
 				</button>
 			</div>
@@ -147,7 +135,9 @@
 			<div class="setBottom">
 				<img src="./img/GoogleAILogo.svg" height="80px" style="margin-bottom: 180px;">
 				<p>
-					IMChair 프로젝트에서는 전이학습(Transfer Learning)의 방식을 사용했다. 전이학습은 이미 대량의 <br>데이터셋으로 학습된 모델의 지식을 활용하여, 새로운 모델을 빠르고 효율적으로 학습시키는 방법이다.<br>
+					IMChair 프로젝트에서는 전이학습(Transfer Learning)의 방식을 사용했다. 전이학습은 이미 <br>
+					대량의 데이터셋으로 학습된 모델의 지식을 활용하여, 새로운 모델을 빠르고 효율적으로 <br>
+					학습시키는 방법이다.<br>
 					<br>
 					이미지 분류를 위해 널리 알려진 구글의 인셉션(Inception V3) 모델을 기반으로, 이미지의 다양한 <br>요소와 형태를 인식하고 분석하는 모델을 구성했다.
 				</p>
@@ -155,6 +145,7 @@
 		</div>
 		<div id="main_ModelArchitecture_2" class="wrapper main">
 			<div class="setBottom">
+				<img src="./img/StableDiffusionLogo.png" height="80px" style="margin-bottom: 96px;">
 				<p>
 					딥러닝 모델을 훈련시키기 위해서는 대량의 라벨이 붙은 이미지 데이터가 필요하다. <br>
 					이를 위해 IMChair 프로젝트에서는 효율적인 데이터 수집 방법을 모색하였고, 이 과정에서 생성형 <br>
@@ -164,17 +155,17 @@
 					다양한 디자인 요소와 형태를 포함하는 새로운 이미지를 대량으로 생성했고, 이렇게 생성된 이미지는 <br>
 					딥러닝 모델의 학습 데이터로 사용되었다.
 				</p>
-				<button id="ModelBtn" onclick="location.href='Model.html'" style="background: black; color: white;">
+				<button id="ModelBtn" onclick="movePage('./model.html');" style="background: black; color: white;">
 					Model Architecture 더 살펴보기
 				</button>
 			</div>
 		</div>
 		<div id="main_Library" class="wrapper main">
 			<div class="setBottom">
-				<div class="libraryName" onclick="location.href='./lib1.html'">Hard</div>
-				<div class="libraryName" onclick="location.href='./lib2.html'">Soft</div>
-				<div class="libraryName" onclick="location.href='./lib3.html'">Static</div>
-				<div class="libraryName" onclick="location.href='./lib4.html'">Dynamic</div>
+				<div class="libraryName" onclick="movePage('./lib1.html');">Hard</div>
+				<div class="libraryName" onclick="movePage('./lib2.html');">Soft</div>
+				<div class="libraryName" onclick="movePage('./lib3.html');">Static</div>
+				<div class="libraryName" onclick="movePage('./lib4.html');">Dynamic</div>
 			</div>
 		</div>
 	</div>
@@ -184,22 +175,22 @@
 	getPresetIMG()
 
 	function getPresetIMG() {
-		const presetArray = [{"name":"img1","fullname":"Nighthawks by Edward Hopper","property":"soft static98"},
-			{"name":"img2","fullname":"Impression by Marian Wawrzeniecki","property":"soft static78"},
-			{"name":"img3","fullname":"Rocks at Belle Isle by Claude Monet","property":"soft static55"},
-			{"name":"img4","fullname":"Pygmalion and Galatea by Jean Léon Gérôme","property":"soft dynamic61"},
-			{"name":"img5","fullname":"Salome by Henri Regnault","property":"soft dynamic74"},
-			{"name":"img6","fullname":"산수도(山水圖) by 서문보","property":"soft dynamic82"},
-			{"name":"img7","fullname":"Lovers by Mikuláš Galanda","property":"soft dynamic93"},
-			{"name":"img8","fullname":"Green Wheat Fields by Vincent van Gogh","property":"soft dynamic100"},
-			{"name":"img9","fullname":"AS8-14-2383HR by Apollo 8 astronaut William Anders","property":"hard static100"},
-			{"name":"img10","fullname":"A 18 by László Moholy-Nagy","property":"hard static94"},
-			{"name":"img11","fullname":"Counter-composition VI. by Theo van Doesburg","property":"hard static83"},
-			{"name":"img12","fullname":"Seconds into the first airplane flight","property":"hard static70"},
-			{"name":"img13","fullname":"Signet of the Staatliche Bauhaus by Oskar Schlemmer","property":"hard static63"},
-			{"name":"img14","fullname":"The Rocket Book Pl 15 by Peter Newell","property":"hard static51"},
-			{"name":"img15","fullname":"Lunch atop a Skyscraper New York Herald-Tribune","property":"hard dynamic68"},
-			{"name":"img16","fullname":"The Great Wave off Kanagawa","property":"hard dynamic96"}]
+		const presetArray = [{"name":"img1","title":"Seconds into the first airplane flight","artist":"","property":"hard static 70","chair":"hard_static_70"},
+{"name":"img2","title":"AS8-14-2383HR","artist":"Apollo 8 astronaut William Anders","property":"hard static 100","chair":"hard_static_100"},
+{"name":"img3","title":"산수도(山水圖)","artist":"서문보","property":"soft dynamic 82","chair":"soft_dynamic_80"},
+{"name":"img4","title":"Signet of the Staatliche Bauhaus","artist":"Oskar Schlemmer","property":"hard static 63","chair":"hard_static_60"},
+{"name":"img5","title":"Pygmalion and Galatea","artist":"Jean Léon Gérôme","property":"soft dynamic 61","chair":"soft_dynamic_60"},
+{"name":"img6","title":"Lunch atop a Skyscraper New York Herald-Tribune","artist":"","property":"hard dynamic 68","chair":"hard_dynamic_70"},
+{"name":"img7","title":"The Rocket Book Pl 15","artist":"Peter Newell","property":"hard static 51","chair":"hard_neautral"},
+{"name":"img8","title":"Salome","artist":"Henri Regnault","property":"soft dynamic 74","chair":"soft_dynamic_70"},
+{"name":"img9","title":"The Great Wave off Kanagawa","artist":"","property":"hard dynamic 96","chair":"hard_dynamic_100"},
+{"name":"img10","title":"Nighthawks","artist":"Edward Hopper","property":"soft static 98","chair":"soft_static_100"},
+{"name":"img11","title":"Green Wheat Fields","artist":"Vincent van Gogh","property":"soft dynamic 100","chair":"soft_dynamic_100"},
+{"name":"img12","title":"Counter-composition VI.","artist":"Theo van Doesburg","property":"hard static 83","chair":"hard_static_80"},
+{"name":"img13","title":"Rocks at Belle Isle","artist":"Claude Monet","property":"soft static 55","chair":"soft_static_60"},
+{"name":"img14","title":"A 18","artist":"László Moholy-Nagy","property":"hard static 94","chair":"hard_static_90"},
+{"name":"img15","title":"Impression","artist":"Marian Wawrzeniecki","property":"soft static 78","chair":"soft_static_80"},
+{"name":"img16","title":"Lovers","artist":"Mikuláš Galanda","property":"soft dynamic 93","chair":"soft_dynamic_90"}]
 
 		const container = document.getElementById("bgSlide")
 		for (var i = 0; i < presetArray.length; i++) {
@@ -212,17 +203,35 @@
 		}
 	}
 
+// 빅로고 투명도
+	document.addEventListener('DOMContentLoaded', function () {
+	    window.addEventListener('scroll', handleScroll);
+
+	    function handleScroll() {
+	        const scrollPosition = window.scrollY;
+	        const introElement = document.getElementById('intro_1');
+	        const elementHeight = introElement.clientHeight;
+	        const opacity = 1 - scrollPosition / ( elementHeight + 120 );
+	        introElement.style.opacity = opacity.toFixed(2);
+	    }
+	});
+
+
 // 내비 내용 변경
 const header = document.getElementById('header');
 const nav = document.getElementById('nav');
-const headLogo = document.getElementById('headLogo');
+const headLogo = document.getElementById("headLogo");
 
 header.style.display = 'none';
 
+scrollChange()
 
 document.addEventListener("DOMContentLoaded", function() {
-    window.addEventListener("scroll", function() {
-        let scroll = window.pageYOffset + 340;
+    window.addEventListener("scroll", scrollChange);
+});
+
+function scrollChange(){
+	    let scroll = window.pageYOffset + 260;
         const navArray = ['none','Demo service', 'Model Architecture', 'Model Architecture', 'Library'];
 
         for (let i = 0; i < document.querySelectorAll(".main").length; i++) {
@@ -237,35 +246,78 @@ document.addEventListener("DOMContentLoaded", function() {
 				} else if (i === 1) {
 				    nav.style.color = 'white';
 				    header.style.display = 'block';
+					headLogo.src = "./img/logoWhite.svg" 
 				} else if (i > 1) {
 				    nav.style.color = 'black';
 				    header.style.display = 'block';
+					headLogo.src = "./img/logo.svg" 
 				}
             }
         }
-    });
-});
+    };
+
+// 페이지 로드 시 저장된 스크롤 위치 복원
+	let scrollPosition = window.scrollY;
+
+	window.addEventListener('load', function () {
+	    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+	    if (savedScrollPosition !== null) {
+	        window.scrollTo(0, savedScrollPosition);
+	        sessionStorage.removeItem('scrollPosition'); // 복원 후 저장된 위치 제거 (선택 사항)
+	    }
+	});
+
+	window.addEventListener('scroll', function () {
+	    // 스크롤 할 때마다 scrollPosition 업데이트
+	    scrollPosition = window.scrollY;
+	});
 
 
-// // 타임아웃
+// 타임아웃
 	let touchTimeout;
+    resetTouchTimeout();
+	document.getElementById('fadePage').classList.remove("fadeToWhite");
+	document.getElementById('fadePage').classList.add("fadeFromWhite");
+	document.addEventListener('touchstart', TouchEventHandler);
 
-	function resetTouchTimeout() {
-	    clearTimeout(touchTimeout);
-	    touchTimeout = setTimeout(goSplash, 30000);
-	}
 
 	function TouchEventHandler() {
 	    resetTouchTimeout();
 	}
 
+	function resetTouchTimeout() {
+	    clearTimeout(touchTimeout);
+	    touchTimeout = setTimeout(movePageSplash, 30000);
+	}
+
+	
+	function movePageSplash() {
+		sessionStorage.removeItem('scrollPosition');
+		document.getElementById('fadePage').classList.remove("fadeFromWhite");
+		document.getElementById('fadePage').classList.add("fadeToWhite");
+		setTimeout(goSplash, 2000);
+	}
+
 	function goSplash() {
+	    sessionStorage.removeItem('scrollPosition'); // 저장된 위치 제거 (선택 사항)
 		location.replace('./splash.html');
 	}
 
-	document.addEventListener('touchstart', TouchEventHandler);
 
-	resetTouchTimeout();
+// 페이지 전환 시 페이드아웃
+
+
+	function movePage(destination) {
+	    sessionStorage.setItem('scrollPosition', scrollPosition);
+
+		document.getElementById('fadePage').classList.remove("fadeFromWhite");
+		document.getElementById('fadePage').classList.add("fadeToWhite");
+		setTimeout(() => {
+		    location.href = destination;
+		}, 2000);
+	}
+
+
 
 
 
